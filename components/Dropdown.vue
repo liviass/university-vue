@@ -1,6 +1,6 @@
 <template>
-  <select :name="name">
-    <option v-for="option, i in options" :key="i" :value="option">{{ option }}</option>
+  <select :name="name" @change="$emit('item-select', $event.target.value)">
+    <option v-for="option in options" :key="option.code" :value="option.name">{{ option.name }}</option>
   </select>
 </template>
 
@@ -15,6 +15,8 @@ const props = defineProps({
     required: true
   }
 })
+
+defineEmits(['item-select'])
 </script>
 
 <style></style>

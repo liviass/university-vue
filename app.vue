@@ -8,13 +8,16 @@
       <p><strong>Amount of time the response took to retrieve:</strong> 0</p>
     </div>
 
-    <dropdown name="countries" :options="countries"></dropdown>
+    <dropdown name="countries" :options="countries" @item-select="handleCountryChange"></dropdown>
     <search-box></search-box>
     <list :rows="institutions"></list>
   </div>
 </template>
 
 <script setup>
+const handleCountryChange = (countryCode) => {
+  console.log(countryCode);
+}
 // TODO: Mover para um arquivo de "server"?
 const getSearchURL = (country = 'Canada', name) => {
   const BASE_URL = "http://universities.hipolabs.com/search";
@@ -243,10 +246,6 @@ const {
         name: institution.name,
         state: institution["state-province"],
         website: institution.web_pages[0], // TODO: Pegar todas as web pages
-        country: {
-          code: institution.alpha_two_code, // NOTE: Code ISO 3166-1 alpha-2 to be used on the Dropdown on first load
-          name: institution.country,
-        },
       };
     });
   },
