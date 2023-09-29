@@ -1,15 +1,15 @@
 <template>
   <div class="stack">
     <tab-bar />
-    <performance-card class="align-left" :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime"></performance-card>
+    <performance-card class="align-left" :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime" />
 
     <div class="filters__wrapper align-left">
-      <dropdown name="countries" :options="countries" @item-select="handleCountryChange" :selected="country"></dropdown>
-      <search-box :searchTerm="search" @search-change="handleSearchChange"></search-box>
+      <dropdown name="countries" :options="countries" @item-select="handleCountryChange" :selected="country" />
+      <search-box :searchTerm="search" @search-change="handleSearchChange" />
       <button class="filter__button" @click="clearFilters">Clear</button>
     </div>
 
-    <list :rows="universities.items" :isFavorite="isFavorite" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites"></list>
+    <list :rows="universities.items" :isFavorite="isFavorite" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites" />
   </div>
 </template>
 

@@ -20,7 +20,7 @@ To install it, follow the instructions from the official websites:
 Run the command below from the root directory, which is the folder where the *docker-compose.yml* file is.
 
 ```
-sudo docker-compose up
+sudo docker compose up
 ```
 
 This command will create the container for the application to run.

@@ -3,7 +3,7 @@ export default defineNuxtPlugin(nuxtApp => {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open('universitiesdb', 1);
       request.onupgradeneeded = () => {
-        db = request.result;
+        let db = request.result;
 
         if (!db.objectStoreNames.contains('favorites'))
           db.createObjectStore('favorites', {keyPath: 'key'});
