@@ -1,13 +1,8 @@
 <template>
   <div>
-    <nuxt-link to="/favorites">Favorites</nuxt-link>
-    <div>
-      <h4>Performance tracking of the API</h4>
-      <p>
-        <strong>Response code:</strong> {{ universities.apiPerformance.status }}
-      </p>
-      <p><strong>Amount of time the response took to retrieve:</strong> {{ universities.apiPerformance.executionTime }}</p>
-    </div>
+    <tab-bar></tab-bar>
+    <h1>Universities</h1>
+    <performance-card :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime"></performance-card>
 
     <dropdown name="countries" :options="countries" @item-select="handleCountryChange" :selected="country"></dropdown>
 

@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="/">Voltar</nuxt-link>
+  <tab-bar/>
   <list :rows="favorites" :handleRemove="remove"></list>
 </template>
 
@@ -8,5 +8,4 @@ const { $getAll, $remove } = useNuxtApp();
 const favorites = ref(await $getAll());
 const refreshFavorites = async () => favorites.value = await $getAll();
 const remove = (key) => $remove(key, refreshFavorites);
-
 </script>

@@ -50,7 +50,7 @@ export default defineNuxtPlugin(nuxtApp => {
     return new Promise((resolve, reject) => {
       const transaction = connection.transaction(['favorites'], 'readwrite');
       const store = transaction.objectStore('favorites');
-      const request = store.add({...item});
+      const request = store.add(JSON.parse(JSON.stringify(item))); // deep clone
 
       request.onsuccess = () => {
         if (callback) callback();
