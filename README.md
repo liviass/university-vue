@@ -1,75 +1,33 @@
-# Nuxt 3 Minimal Starter
+# University Search
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is a Nuxt v3 application that allows user to search for universities, by country and by name, and save locally their favorites.
 
-## Setup
+## Getting Started
 
-Make sure to install the dependencies:
+To locally preview production build, follow the instructions below.
 
-```bash
-# npm
-npm install
+### Prerequisites
 
-# pnpm
-pnpm install
+To run the application you will need Docker an Docker Compose installed on your machine.
 
-# yarn
-yarn install
+To install it, follow the instructions from the official websites:
 
-# bun
-bun install
+* [Docker](https://docs.docker.com/install/)
+* [Docker Compose](https://docs.docker.com/compose/install)
+
+### Installing
+
+Run the command below from the root directory, which is the folder where the *docker-compose.yml* file is.
+
+```
+sudo docker-compose up
 ```
 
-## Development Server
+This command will create the container for the application to run.
+Once the container is up and running, the application will be accessible on ```http://localhost:3000```.
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Built With
+* [Nuxt](https://nuxt.com/)
+* [Sass](https://sass-lang.com/)
+* [Docker](https://docs.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
