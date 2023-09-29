@@ -1,29 +1,29 @@
 <template>
   <div class="wrapper">
     <div class="row header">
-      <div class="cell">
+      <div class="cell name">
         Name
       </div>
-      <div class="cell">
+      <div class="cell state">
         State/Province
       </div>
-      <div class="cell">
+      <div class="cell website">
         Website
       </div>
-      <div class="cell">
+      <div class="cell favorite">
       </div>
     </div>
     <div class="row body" v-for="row in rows" :key="row.key">
-      <div class="cell">
+      <div class="cell name">
         {{row.name}}
       </div>
-      <div class="cell">
+      <div class="cell state">
         {{ row.state }}
       </div>
-      <div class="cell">
+      <div class="cell website">
         <p v-for="site in row.website">{{ site }}<br/></p>
       </div>
-      <div class="cell">
+      <div class="cell favorite">
         <button v-if="!isFavorite(row.key)" class="button" @click="() => handleAdd(row)">
             <img src="/icons/heart.png" alt="Add to favorites" class="button__icon"/>
           </button>
@@ -33,31 +33,6 @@
       </div>
     </div>
   </div>
-  <!-- <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>State/Province</th>
-        <th>Website</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="row in rows" :key="row.key">
-        <th>{{ row.name }}</th>
-        <th>{{ row.state }}</th>
-        <th><p v-for="site in row.website">{{ site }}</p></th>
-        <th>
-          <button v-if="!isFavorite(row.key)" class="button" @click="() => handleAdd(row)">
-            <img src="/icons/heart.png" alt="Add to favorites" class="button__icon"/>
-          </button>
-          <button v-else @click="() => handleRemove(row.key)" class="button">
-            <img src="/icons/heart-filled.png" alt="Remove from favorites" class="button__icon"/>
-          </button>
-        </th>
-      </tr>
-    </tbody>
-  </table> -->
 </template>
 
 <script setup>
@@ -83,18 +58,28 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .wrapper{
-  width: 100%;
-  padding: 2rem;
+  width: calc(100% - 2rem); // 100% - padding
+  padding: 1rem;
 }
 
 .row {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 1rem;
   line-height: 2rem;
   padding: 0.25rem 0.5rem;
+  width: calc(100% - 1rem); // 100% - padding
+
+  @media (max-width: 62em) {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: calc(100% - 24px) 24px;
+    grid-template-rows: 1rem 1rem;
+    grid-template-areas:
+      "name name"
+      "state favorite";
+  }
 
   &.header {
     font-weight: bold;
@@ -116,17 +101,30 @@ const props = defineProps({
   overflow: hidden;
   min-height: 2rem;
 
-  &:first-child {
-    width: 100%;
+  &.name {
+    width: calc(100% - 1rem);
+    @media (max-width: 62em) {
+      grid-area: name;
+    }
   }
-  &:nth-child(2) {
+  &.state {
     width: 470px;
+    @media (max-width: 62em) {
+      grid-area: state;
+    }
   }
-  &:nth-child(3) {
+  &.website {
     width: 650px;
+    @media (max-width: 62em) {
+      display: none;
+      grid-area: website;
+    }
   }
-  &:last-child {
+  &.favorite {
     width: 48px;
+    @media (max-width: 62em) {
+      grid-area: favorite;
+    }
   }
   & p {
     line-height: 1rem;

@@ -119,6 +119,10 @@ const isFavorite = (key) => favorites.value.includes(key)
 
 .align-left {
   align-self: flex-start;
+
+  @media (max-width: 62em) {
+    align-self: center;
+  }
 }
 
 .filters__wrapper {
@@ -126,7 +130,12 @@ const isFavorite = (key) => favorites.value.includes(key)
   flex-direction: row;
   gap: 1rem;
   padding: 1rem;
-  width: 100%;
+  width: calc(100% - 2rem); // 100% - padding
+
+  @media (max-width: 62em) {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
 }
 
 .filter__button {

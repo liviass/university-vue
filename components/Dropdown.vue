@@ -30,5 +30,6 @@ defineEmits(['item-select'])
   font-family: var(--display-font);
   border: 1px solid var(--primary-color);
   border-radius: 6px;
+  height: 2rem;
 }
 </style>

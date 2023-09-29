@@ -20,7 +20,7 @@ defineEmits(['search-change'])
   font-family: var(--display-font);
   padding: 0 0.5rem;
   border-radius: 6px;
-  width: 100%;
+  width: calc(100% - 1rem); // 100% - padding
   border: 1px solid var(--primary-color);
 }
 </style>
