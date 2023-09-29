@@ -12,7 +12,7 @@
       <tr v-for="row in rows" :key="row.key">
         <th>{{ row.name }}</th>
         <th>{{ row.state }}</th>
-        <th>{{ row.website }}</th>
+        <th><p v-for="site in row.website">{{ site }}</p></th>
         <th>
           <button v-if="!isFavorite(row.key)" @click="() => handleAdd(row)">Add to Favorites</button>
           <button v-else @click="() => handleRemove(row.key)">Remove from Favorites</button>

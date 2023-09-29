@@ -64,7 +64,7 @@ const handleRequest = () => {
             key: _slugify(`${university.name}-${university['state-province']}`),
             name: university.name,
             state: university['state-province'],
-            website: university.web_pages[0] // TODO: Pegar todas as web pages
+            website: university.web_pages
           }
         })
       }

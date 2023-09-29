@@ -1,5 +1,4 @@
 <template>
-  <!-- {{ favorites }} -->
   <nuxt-link to="/">Voltar</nuxt-link>
   <list :rows="favorites" :handleRemove="remove"></list>
 </template>
