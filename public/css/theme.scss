@@ -10,4 +10,12 @@
   --box-shadow-color: rgba(0, 0, 0, 0.2);
 
   --display-font: 'Gotham', sans-serif;
+  --body-font: 'Inter', sans-serif;
+
+  font-family: var(--display-font);
+  // color: var(--text-primary-color);
+}
+
+p {
+  font-family: var(--body-font);
 }

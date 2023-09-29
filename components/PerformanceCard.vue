@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <h4 class="card__title">API Performance Tracking</h4>
+    <h6 class="card__title">API Performance Tracking</h6>
     <p>
       <strong>Response code:</strong> {{ status }}
     </p>
-    <p><strong>Response time:</strong> {{ executionTime }}</p>
+    <p><strong>Response time (in miliseconds):</strong> {{ executionTime }}</p>
   </div>
 </template>
 
@@ -25,17 +25,18 @@ const props = defineProps({
 .card {
   box-shadow: 0 0 10px var(--box-shadow-color);
   border-radius: 6px;
-  padding: 18px;
+  padding: 1rem;
   max-width: fit-content;
 
-  & p {
-    line-height: 24px;
-    margin: 6px;
+  & h6 {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--primary-color);
   }
 
-  & h4 {
-    font-size: 24px;
-    margin: 0;
+  & p {
+    font-size: 0.75rem;
+    margin: 0.25rem;
   }
 }
 </style>

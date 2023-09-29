@@ -1,5 +1,5 @@
 <template>
-  <select :name="name" @change="$emit('item-select', $event.target.value)">
+  <select class="dropdown" :name="name" @change="$emit('item-select', $event.target.value)">
     <option v-for="option in options" :key="option.code" :value="option.name" :selected="option.name === selected">{{ option.name }}</option>
   </select>
 </template>
@@ -24,4 +24,11 @@ const props = defineProps({
 defineEmits(['item-select'])
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.dropdown {
+  line-height: 2rem;
+  font-family: var(--display-font);
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+}
+</style>

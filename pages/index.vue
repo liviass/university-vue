@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <tab-bar></tab-bar>
-    <h1>Universities</h1>
-    <performance-card :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime"></performance-card>
+  <div class="stack">
+    <tab-bar />
+    <performance-card class="align-left" :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime"></performance-card>
 
-    <dropdown name="countries" :options="countries" @item-select="handleCountryChange" :selected="country"></dropdown>
+    <div class="filters__wrapper align-left">
+      <dropdown name="countries" :options="countries" @item-select="handleCountryChange" :selected="country"></dropdown>
+      <search-box :searchTerm="search" @search-change="handleSearchChange"></search-box>
+      <button class="filter__button" @click="clearFilters">Clear</button>
+    </div>
 
-    <search-box :searchTerm="search" @search-change="handleSearchChange"></search-box>
-    <button @click="clearFilters">Clear Filters</button>
     <list :rows="universities.items" :isFavorite="isFavorite" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites"></list>
   </div>
 </template>
@@ -105,3 +106,41 @@ const removeFromFavorites = (key) => $remove(key, refreshFavorites);
 const addToFavorites = (university) => $add(university, refreshFavorites);
 const isFavorite = (key) => favorites.value.includes(key)
 </script>
+
+<style scoped lang="scss">
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  max-width: 960px;
+  margin: auto;
+}
+
+.align-left {
+  align-self: flex-start;
+}
+
+.filters__wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+.filter__button {
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--text-secondary-color);
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--text-primary-color);
+  }
+}
+</style>
