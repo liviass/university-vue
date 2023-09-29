@@ -1,5 +1,6 @@
 <template>
   <div>
+    <nuxt-link to="/favorites">Favorites</nuxt-link>
     <div>
       <h4>Performance tracking of the API</h4>
       <p>
@@ -12,7 +13,7 @@
 
     <search-box :searchTerm="search" @search-change="handleSearchChange"></search-box>
     <button @click="clearFilters">Clear Filters</button>
-    <list :rows="universities.items" :favorites="favorites" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites"></list>
+    <list :rows="universities.items" :isFavorite="isFavorite" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites"></list>
   </div>
 </template>
 
@@ -86,6 +87,7 @@ const {data: universities, refresh} = await useAsyncData('/universities', handle
 const clearFilters = () => {
   country.value = 'Canada';
   search.value = '';
+  refresh();
 }
 
 const handleCountryChange = async (countryName) => {
@@ -98,69 +100,13 @@ const handleSearchChange = (searchTerm) => {
   refresh();
 }
 
-const favorites = ref([]);
-
-// Favorites DB
-let db; // objeto para manipular o BD
-
-if (process.client) {
-  let reqBD = indexedDB.open('universitiesdb', 1)
-
-  reqBD.onerror = function(evento) {
-    console.log(reqBD.error);
-  }
-  reqBD.onsuccess = function(evento) {
-    db = reqBD.result;
-      // Read all
-    db.transaction(['favorites'])
-      .objectStore('favorites')
-      .getAll().onsuccess = function(evento) {
-        console.log('RESULT', evento.target.result);
-        // favorites.value = evento.target.result;
-        favorites.value = evento.target.result.map(({key}) => key);
-    }
-  }
-
-  reqBD.onupgradeneeded = function(evento) {
-    db = reqBD.result;
-    if (!bd.objectStoreNames.contains('favorites'))
-      bd.createObjectStore('favorites', {keyPath: 'key'});
-  }
-
-
+// Favorites
+const { $getAll, $remove, $add } = useNuxtApp();
+const favorites = ref((await $getAll()).map(({key}) => key));
+const refreshFavorites = async () => {
+  favorites.value = (await $getAll()).map(({key}) => key);
 }
-
-// Delete
-const removeFromFavorites = (key) => {
-  db.transaction(['favorites'], 'readwrite')
-    .objectStore('favorites')
-    .delete(key)
-    .onsuccess = function(evento) {
-      refreshFavorites();
-      // favorites.value = favorites.value.filter((favorite) => favorite.key !== key);
-      console.log('Livro excluído');
-    }
-  };
-
-// Add
-const addToFavorites = (university) => {
-  let reqOS = db.transaction(['favorites'], 'readwrite').objectStore('favorites').add({...university});
-
-  reqOS.onerror = function(evento) {
-    console.log(reqOS.error);
-  }
-  reqOS.onsuccess = function(evento) {
-    console.log(reqOS.result);
-    refreshFavorites();
-  }
-}
-
-const refreshFavorites = () => {
-  db.transaction(['favorites'])
-    .objectStore('favorites')
-    .getAll().onsuccess = function(evento) {
-      console.log('RESULT', evento.target.result);
-      favorites.value = evento.target.result.map(({key}) => key);
-    }
-}
+const removeFromFavorites = (key) => $remove(key, refreshFavorites);
+const addToFavorites = (university) => $add(university, refreshFavorites);
+const isFavorite = (key) => favorites.value.includes(key)
 </script>

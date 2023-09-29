@@ -14,7 +14,7 @@
         <th>{{ row.state }}</th>
         <th>{{ row.website }}</th>
         <th>
-          <button v-if="!favorites.includes(row.key)" @click="() => handleAdd(row)">Add to Favorites</button>
+          <button v-if="!isFavorite(row.key)" @click="() => handleAdd(row)">Add to Favorites</button>
           <button v-else @click="() => handleRemove(row.key)">Remove from Favorites</button>
         </th>
       </tr>
@@ -26,34 +26,19 @@
 const props = defineProps({
   rows: {
     type: Array,
-    required: true
+    default: []
   },
-  favorites: {
-    type: Array,
-    required: true
+  isFavorite: {
+    type: Function,
+    default: (key) => true
   },
   handleAdd: {
     type: Function,
-    required: true
+    default: (row) => {}
   },
   handleRemove: {
     type: Function,
-    required: true
+    default: (row) => {}
   }
 })
-// // const favorites = ref([]);
-// // const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-// const handleAdd = () => {
-//   // const list = JSON.parse(localStorage.getItem('favorites')) || [];
-//   // favorites.push(row.key);
-//   // localStorage.setItem('favorites', JSON.stringify(list));
-// }
-
-// const remove = () => {
-//   // const list = JSON.parse(localStorage.getItem('favorites')) || [];
-//   // const index = list.indexOf(row.key);
-//   // list.splice(index, 1);
-//   // localStorage.setItem('favorites', JSON.stringify(list));
-// }
 </script>
