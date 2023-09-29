@@ -7,10 +7,14 @@ export default defineNuxtPlugin(nuxtApp => {
 
         if (!db.objectStoreNames.contains('favorites'))
           db.createObjectStore('favorites', {keyPath: 'key'});
-
-        return resolve(db)
       };
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = () => {
+        let conn = request.result;
+
+        conn.onversionchange = () => conn.close();
+
+        resolve(request.result);
+      };
       request.onerror = () => reject(request.error);
       request.onblocked = () => { console.log('blocked'); };
     });
