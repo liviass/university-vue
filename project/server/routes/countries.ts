@@ -1,4 +1,4 @@
-export default defineEventHandler(() => {
+export default defineEventHandler<Option[]>(() => {
   // This countries lit was obtained by filtering the results from 'http://universities.hipolabs.com/search'
   return [
     { code: "UA", name: "Ukraine" },

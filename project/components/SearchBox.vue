@@ -1,16 +1,16 @@
 <template>
-  <input class="search" placeholder="Filter by university name" :value="searchTerm" @input="$emit('search-change', $event.target.value)"/>
+  <input class="search" placeholder="Filter by university name" :value="searchTerm" @input="$emit('search-change', ($event.target as HTMLInputElement).value)"/>
 </template>
 
-<script setup>
-const props = defineProps({
-  searchTerm: {
-    type: String,
-    required: true
-  }
-})
+<script setup lang="ts">
+interface Props {
+  searchTerm: string;
+}
+const props = defineProps<Props>()
 
-defineEmits(['search-change'])
+defineEmits<{
+  'search-change': [value: string]
+}>()
 </script>
 
 <style scoped lang="scss">

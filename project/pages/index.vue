@@ -1,27 +1,30 @@
 <template>
   <div class="stack">
     <tab-bar />
-    <performance-card class="align-left" :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime" />
+    <performance-card v-if="universities && universities" class="align-left" :status="universities.apiPerformance.status" :executionTime="universities.apiPerformance.executionTime || undefined" />
 
     <div class="filters__wrapper align-left">
-      <dropdown name="countries" :options="countries" @item-select="handleCountryChange" :selected="country" />
+      <dropdown v-if="countries" name="countries" :options="countries" @item-select="handleCountryChange" :selected="country" />
+      <span v-else>Error loading countries</span>
       <search-box :searchTerm="search" @search-change="handleSearchChange" />
       <button class="filter__button" @click="clearFilters">Clear</button>
     </div>
 
-    <list :rows="universities.items" :isFavorite="isFavorite" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites" />
+    <list v-if="universities" :rows="universities.items" :isFavorite="isFavorite" :handleAdd="addToFavorites" :handleRemove="removeFromFavorites" />
+    <span v-else>No response was received for your request.</span>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const BASE_URL = 'http://universities.hipolabs.com/search';
 const country = ref('Canada');
 const search = ref('');
 
-const handleRequest = () => {
-  let startTime;
+const handleRequest = (): Promise<APIBody> => {
+  let startTime: number | null = null;
+
   // TODO: Find better place for this
-  const _slugify = (term) => {
+  const _slugify = (term: string): string => {
     return term
       .toString()
       .toLowerCase()
@@ -55,7 +58,8 @@ const handleRequest = () => {
           status: response.status,
           executionTime: startTime ? new Date().getTime() - startTime : null
         },
-        items: response._data.map((university) => {
+        // FIXME: How to define the response type?
+        items: response._data.map((university: any) => {
           return {
             key: _slugify(`${university.name}-${university['state-province']}`),
             name: university.name,
@@ -77,8 +81,8 @@ const handleRequest = () => {
   })
 }
 
-const {data: countries} = await useFetch('/countries');
-const {data: universities, refresh} = await useAsyncData('/universities', handleRequest);
+const {data: countries} = await useFetch<Option[]>('/countries', {key:'countries'});
+const {data: universities, refresh} = await useAsyncData<APIBody>('universities', handleRequest);
 
 const clearFilters = () => {
   country.value = 'Canada';
@@ -86,25 +90,25 @@ const clearFilters = () => {
   refresh();
 }
 
-const handleCountryChange = async (countryName) => {
+const handleCountryChange = async (countryName: string): Promise<void> => {
   country.value = countryName;
   refresh();
 }
 
-const handleSearchChange = (searchTerm) => {
+const handleSearchChange = (searchTerm: string): void => {
   search.value = searchTerm;
   refresh();
 }
 
 // Favorites
 const { $getAll, $remove, $add } = useNuxtApp();
-const favorites = ref((await $getAll()).map(({key}) => key));
+const favorites = ref((await $getAll() as University[]).map(({key}) => key));
 const refreshFavorites = async () => {
-  favorites.value = (await $getAll()).map(({key}) => key);
+  favorites.value = (await $getAll() as University[]).map(({key}) => key);
 }
-const removeFromFavorites = (key) => $remove(key, refreshFavorites);
-const addToFavorites = (university) => $add(university, refreshFavorites);
-const isFavorite = (key) => favorites.value.includes(key)
+const removeFromFavorites = (key: string) => $remove(key, refreshFavorites);
+const addToFavorites = (university: University) => $add(university, refreshFavorites);
+const isFavorite = (key: string) => favorites.value.includes(key)
 </script>
 
 <style scoped lang="scss">

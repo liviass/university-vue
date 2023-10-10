@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const router = useRouter();
 // If the current route is /favorites, add class to corresponding link
 const current = computed(() => router.currentRoute.value.path);

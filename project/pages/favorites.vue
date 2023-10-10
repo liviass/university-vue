@@ -5,11 +5,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const { $getAll, $remove } = useNuxtApp();
-const favorites = ref(await $getAll());
-const refreshFavorites = async () => favorites.value = await $getAll();
-const remove = (key) => $remove(key, refreshFavorites);
+const favorites = ref(await $getAll() as University[]);
+const refreshFavorites = async () => favorites.value = await $getAll() as University[];
+const remove = (key: string): Promise<University> => $remove(key, refreshFavorites);
 </script>
 
 <style scoped lang="scss">

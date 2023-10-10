@@ -4,21 +4,17 @@
     <p>
       <strong>Response code:</strong> {{ status }}
     </p>
-    <p><strong>Response time (in miliseconds):</strong> {{ executionTime }}</p>
+    <p v-if="executionTime"><strong>Response time (in miliseconds):</strong> {{ executionTime }}</p>
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  status: {
-    type: Number,
-    required: true
-  },
-  executionTime: {
-    type: Number,
-    required: true
-  }
-})
+<script setup lang="ts">
+interface Props {
+  status: number
+  executionTime?: number
+}
+
+const props = defineProps<Props>()
 </script>
 
 <style lang="scss">

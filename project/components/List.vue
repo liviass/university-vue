@@ -1,63 +1,62 @@
 <template>
   <div class="wrapper">
     <div class="row header">
-      <div class="cell name">
-        Name
-      </div>
-      <div class="cell state">
-        State/Province
-      </div>
-      <div class="cell website">
-        Website
-      </div>
-      <div class="cell favorite">
-      </div>
+      <div class="cell name">Name</div>
+      <div class="cell state">State/Province</div>
+      <div class="cell website">Website</div>
+      <div class="cell favorite"></div>
     </div>
     <div class="row body" v-for="row in rows" :key="row.key">
       <div class="cell name">
-        {{row.name}}
+        {{ row.name }}
       </div>
       <div class="cell state">
         {{ row.state }}
       </div>
       <div class="cell website">
-        <p v-for="site in row.website">{{ site }}<br/></p>
+        <p v-for="site in row.website">{{ site }}<br /></p>
       </div>
       <div class="cell favorite">
-        <button v-if="!isFavorite(row.key)" class="button" @click="() => handleAdd(row)">
-            <img src="/icons/heart.png" alt="Add to favorites" class="button__icon"/>
-          </button>
-          <button v-else @click="() => handleRemove(row.key)" class="button">
-            <img src="/icons/heart-filled.png" alt="Remove from favorites" class="button__icon"/>
-          </button>
+        <button
+          v-if="!isFavorite(row.key)"
+          class="button"
+          @click="() => handleAdd(row)"
+        >
+          <img
+            src="/icons/heart.png"
+            alt="Add to favorites"
+            class="button__icon"
+          />
+        </button>
+        <button v-else @click="() => handleRemove(row.key)" class="button">
+          <img
+            src="/icons/heart-filled.png"
+            alt="Remove from favorites"
+            class="button__icon"
+          />
+        </button>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  rows: {
-    type: Array,
-    default: []
-  },
-  isFavorite: {
-    type: Function,
-    default: (key) => true
-  },
-  handleAdd: {
-    type: Function,
-    default: (row) => {}
-  },
-  handleRemove: {
-    type: Function,
-    default: (row) => {}
-  }
-})
+<script setup lang="ts">
+interface Props {
+  rows: University[];
+  isFavorite: (key: string) => boolean;
+  handleAdd: (row: University) => void;
+  handleRemove: (key: string) => void;
+}
+const props = withDefaults(defineProps<Props>(), {
+  rows: () => [] as University[],
+  isFavorite: () => false,
+  handleAdd: () => {},
+  handleRemove: () => {},
+});
 </script>
 
 <style scoped lang="scss">
-.wrapper{
+.wrapper {
   width: calc(100% - 2rem); // 100% - padding
   padding: 1rem;
 }
@@ -131,7 +130,7 @@ const props = defineProps({
     margin: 0;
   }
 }
-.button{
+.button {
   border: none;
   background-color: transparent;
   padding: 0;

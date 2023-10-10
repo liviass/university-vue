@@ -1,27 +1,31 @@
 <template>
-  <select class="dropdown" :name="name" @change="$emit('item-select', $event.target.value)">
+  <select class="dropdown" :name="name" @change="handleChange">
     <option v-for="option in options" :key="option.code" :value="option.name" :selected="option.name === selected">{{ option.name }}</option>
   </select>
 </template>
 
-<script setup>
-const props = defineProps({
-  options: {
-    type: Array,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  selected: {
-    type: String,
-    required: false,
-    default: ''
-  }
-})
+<script setup lang="ts">
+interface Props {
+  options: Option[]
+  name: string
+  selected?: string
+}
 
-defineEmits(['item-select'])
+const props = withDefaults(defineProps<Props>(), {
+  // options: () => [], // required fields wouldn't need default values
+  // name: '',
+  selected: ''
+});
+
+const emit = defineEmits<{
+  // (e: 'item-select', value: string) : void
+  'item-select': [value: string] // same as above
+}>();
+
+const handleChange = (event: Event) => {
+  emit('item-select', (event.target as HTMLSelectElement).value)
+}
+
 </script>
 
 <style scoped lang="scss">
