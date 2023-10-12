@@ -39,7 +39,7 @@ const clearFilters = () => {
   refresh();
 }
 
-const handleCountryChange = async (countryName: string): Promise<void> => {
+const handleCountryChange = (countryName: string): void => {
   country.value = countryName;
   refresh();
 }
