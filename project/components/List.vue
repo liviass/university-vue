@@ -43,13 +43,13 @@
 <script setup lang="ts">
 interface Props {
   rows: University[];
-  isFavorite: (key: string) => boolean;
-  handleAdd: (row: University) => void;
-  handleRemove: (key: string) => void;
+  isFavorite?: (key: string) => boolean;
+  handleAdd?: (row: University) => void;
+  handleRemove?: (key: string) => void;
 }
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   rows: () => [] as University[],
-  isFavorite: () => false,
+  isFavorite: () => true,
   handleAdd: () => {},
   handleRemove: () => {},
 });

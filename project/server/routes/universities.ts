@@ -24,12 +24,12 @@ const _slugify = (term: string): string => {
 
 const BASE_URL = 'http://universities.hipolabs.com/search';
 
-export default defineEventHandler<EventHandlerRequest, APIBody>((event) => {
+export default eventHandler<{ body: APIBody, query: {country?: string, name: string}}>(async (event) => {
   const query = getQuery(event);
 
   let startTime: number;
 
-  return $fetch<FetchResponse<APIBody>>(BASE_URL, {
+  return $fetch(BASE_URL, {
     query,
     async onRequest() {
       startTime = new Date().getTime();
