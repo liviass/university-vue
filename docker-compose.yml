@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   app:
@@ -8,3 +8,15 @@ services:
       dockerfile: app.dockerfile
     ports:
       - 3000:3000
+
+  unlighthouse:
+    container_name: unlighthouse
+    build:
+      context: ./
+      dockerfile: unlighthouse.dockerfile
+    environment:
+      - SITE=http://localhost:3000
+    ports:
+      - 5678:5678
+    depends_on:
+      - app
