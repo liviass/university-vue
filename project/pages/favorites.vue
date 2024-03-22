@@ -6,6 +6,8 @@
 </template>
 
 <script setup lang="ts">
+import type { University } from '../types'
+
 const { $getAll, $remove } = useNuxtApp();
 const favorites = ref(await $getAll() as University[]);
 const refreshFavorites = async () => favorites.value = await $getAll() as University[];

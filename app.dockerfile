@@ -7,6 +7,9 @@ COPY /project/plugins ./plugins
 COPY /project/pages ./pages
 COPY /project/server ./server
 COPY /project/public ./public
+COPY /project/tsconfig.json .
+COPY /project/types.ts .
+
 RUN npm install
 RUN npm run build
 

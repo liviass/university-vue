@@ -5,6 +5,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Option } from '../types'
+
 interface Props {
   options: Option[]
   name: string

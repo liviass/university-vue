@@ -41,6 +41,8 @@
 </template>
 
 <script setup lang="ts">
+import type { University } from '../types'
+
 interface Props {
   rows: University[];
   isFavorite?: (key: string) => boolean;

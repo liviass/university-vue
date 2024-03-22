@@ -10,13 +10,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: npm install, build
-        run: |
-          npm install
-          npm run build
+      - name: install dependencies
+        run: npm install
         working-directory: project
-      - name: run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli@0.13.x
-          lhci autorun
+      - name: run Lighthouse CI - mobile
+        run: npm run lhci:mobile
+        working-directory: project
+      - name: run Lighthouse CI - desktop
+        run: npm run lhci:desktop
         working-directory: project

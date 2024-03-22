@@ -16,6 +16,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Option, University, APIBody } from '../types'
+
 const country = ref('Canada');
 const search = ref('');
 

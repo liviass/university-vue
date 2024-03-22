@@ -1,3 +1,5 @@
+import type { APIBody } from '../../types'
+
 // TODO: Find better place for this
 const _slugify = (term: string): string => {
   return term

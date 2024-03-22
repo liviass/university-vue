@@ -1,22 +1,22 @@
-interface Option {
+export interface Option {
   code: string;
   name: string;
 }
 
-interface University {
+export interface University {
   key: string;
   name: string;
   state: string;
   website: string[];
 }
 
-interface APIPerformance {
+export interface APIPerformance {
   status: number;
   executionTime: number | null;
 }
 
 
-interface APIBody {
+export interface APIBody {
   items: University[];
   apiPerformance: APIPerformance;
 }
